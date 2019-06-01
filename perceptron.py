@@ -14,20 +14,12 @@ class Perceptron:
         Perceptron.data_pts_amm += 1
         self.number = Perceptron.data_pts_amm
 
-    def is_correct(self):
-        if self.correct:
-            return True
-        return False
-
     def update(self):
-        Perceptron.w += np.dot(self.y, self.el)
-        Perceptron.b += self.y
-
-    def check(self):
         print(self.__str__(), end=': ')
         v = np.dot(self.el, self.w) + Perceptron.b
         if v == 0 or np.sign(v) != np.sign(self.y):
-            self.update()
+            Perceptron.w += np.dot(self.y, self.el)
+            Perceptron.b += self.y
             print('weights: {} bias: {}'.format(x.w, x.b))
         else:
             self.correct = True
@@ -45,4 +37,4 @@ xtable = [
 while not all(x.correct for x in xtable):
     for x in xtable:
         if not x.correct:
-            x.check()
+            x.update()
